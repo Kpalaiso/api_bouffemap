@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   UserCuisinePreference.associate = function (models) {
-    models.User.belongsToMany(models.CuisineType, { through: UserCuisinePreference });
-    models.CuisineType.belongsToMany(models.User, { through: UserCuisinePreference });
+    UserCuisinePreference.belongsTo(models.CuisineType);
+    // models.User.belongsToMany(models.CuisineType, { through: UserCuisinePreference });
+    // models.CuisineType.belongsToMany(models.User, { through: UserCuisinePreference });
   };
   return UserCuisinePreference;
 };

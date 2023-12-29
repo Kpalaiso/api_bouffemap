@@ -123,8 +123,10 @@ router.put('/:id', auth(), updateUser);
  *             properties:
  *               userId:
  *                 type: integer
- *               ambianceId:
- *                 type: integer
+ *               ambianceIds:
+ *                 type: array
+ *                 items:
+ *                    type: number
  *     responses:
  *       201:
  *         description: Created
@@ -202,8 +204,10 @@ router.delete('/:userId/ambiances/:ambianceId', auth(), deleteUserAmbiance);
  *             properties:
  *               userId:
  *                 type: integer
- *               cuisineTypeId:
- *                 type: integer
+ *               cuisineTypeIds:
+ *                 type: array
+ *                 items:
+ *                    type: number
  *     responses:
  *       201:
  *         description: Created
@@ -281,8 +285,10 @@ router.delete('/:userId/cuisine-types/:cuisineTypeId', auth(), deleteUserCuisine
  *             properties:
  *               userId:
  *                 type: integer
- *               establishmentId:
- *                 type: integer
+ *               establishmentIds:
+ *                 type: array
+ *                 items:
+ *                    type: number
  *     responses:
  *       201:
  *         description: Created

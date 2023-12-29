@@ -24,8 +24,9 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   UserRestaurantRex.associate = function (models) {
-    models.User.belongsToMany(models.Restaurant, { through: UserRestaurantRex });
-    models.Restaurant.belongsToMany(models.User, { through: UserRestaurantRex });
+    UserRestaurantRex.belongsTo(models.Restaurant);
+    // models.User.belongsToMany(models.Restaurant, { through: UserRestaurantRex });
+    // models.Restaurant.belongsToMany(models.User, { through: UserRestaurantRex });
   };
 
   return UserRestaurantRex;

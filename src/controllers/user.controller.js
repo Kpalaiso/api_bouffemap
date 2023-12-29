@@ -38,10 +38,15 @@ const updateUser = catchAsync(async (req, res, next) => {
 
 const addUserAmbiance = catchAsync(async (req, res) => {
   try {
-    const { userId, ambianceId } = req.body;
-    await userAmbiancePreferenceService.addUserAmbiancePreference(userId, ambianceId);
-    res.sendStatus(httpStatus.CREATED);
+    const data = req.body;
+    const ambiances = data.ambianceIds;
+    const userId = data.userId;
+    for (const ambianceId of ambiances) {
+      await userAmbiancePreferenceService.addUserAmbiancePreference(userId, ambianceId);
+    }
+    res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces });
   } catch (error) {
+    console.log(error);
     handleError(error, res);
   }
 });
@@ -52,7 +57,7 @@ const getUserAmbiances = catchAsync(async (req, res) => {
     const userAmbiances = await userAmbiancePreferenceService.getAllUserAmbiancePreferencesByUserId(
       userId
     );
-    res.status(httpStatus.OK).json(userAmbiances);
+    res.status(httpStatus.OK).send({ status: config.statusRequestSucces, userAmbiances });
   } catch (error) {
     handleError(error, res);
   }
@@ -70,9 +75,13 @@ const deleteUserAmbiance = catchAsync(async (req, res) => {
 
 const addUserCuisineType = catchAsync(async (req, res) => {
   try {
-    const { userId, cuisineTypeId } = req.body;
-    await userCuisinePreferenceService.addUserCuisineType(userId, cuisineTypeId);
-    res.sendStatus(httpStatus.CREATED);
+    const data = req.body;
+    const cuisineTypes = data.cuisineTypeIds;
+    const userId = data.userId;
+    for (const cuisineTypeId of cuisineTypes) {
+      await userCuisinePreferenceService.addUserCuisineType(userId, cuisineTypeId);
+    }
+    res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces });
   } catch (error) {
     handleError(error, res);
   }
@@ -82,7 +91,7 @@ const getUserCuisineTypes = catchAsync(async (req, res) => {
   try {
     const { userId } = req.params;
     const cuisineTypes = await userCuisinePreferenceService.getUserCuisineTypes(userId);
-    res.status(httpStatus.OK).json(cuisineTypes);
+    res.status(httpStatus.OK).send({ status: config.statusRequestSucces, cuisineTypes });
   } catch (error) {
     handleError(error, res);
   }
@@ -100,9 +109,13 @@ const deleteUserCuisineType = catchAsync(async (req, res) => {
 
 const addUserEstablishment = catchAsync(async (req, res) => {
   try {
-    const { userId, establishmentId } = req.body;
-    await userEstablishmentPreferenceService.addUserEstablishment(userId, establishmentId);
-    res.sendStatus(httpStatus.CREATED);
+    const data = req.body;
+    const establishments = data.establishmentIds;
+    const userId = data.userId;
+    for (const establishmentId of establishments) {
+      await userEstablishmentPreferenceService.addUserEstablishment(userId, establishmentId);
+    }
+    res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces });
   } catch (error) {
     handleError(error, res);
   }

@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   UserAmbiancePreference.associate = function (models) {
-    models.User.belongsToMany(models.Ambiance, { through: UserAmbiancePreference });
-    models.Ambiance.belongsToMany(models.User, { through: UserAmbiancePreference });
+    UserAmbiancePreference.belongsTo(models.Ambiance);
+    // models.User.belongsToMany(models.Ambiance, { through: UserAmbiancePreference });
+    // models.Ambiance.belongsToMany(models.User, { through: UserAmbiancePreference });
   };
   return UserAmbiancePreference;
 };

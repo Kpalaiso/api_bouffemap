@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'establishments',
     }
   );
-  Establishment.associate = function (models) {};
+  Establishment.associate = function (models) {
+    Establishment.belongsToMany(models.User, {
+      through: 'UserEstablishmentPreference',
+    });
+  };
 
   return Establishment;
 };

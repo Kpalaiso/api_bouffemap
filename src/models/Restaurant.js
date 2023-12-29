@@ -29,8 +29,12 @@ module.exports = (sequelize, DataTypes) => {
     Restaurant.belongsToMany(models.CuisineType, { through: 'RestaurantCuisineType' });
     Restaurant.belongsToMany(models.Comodity, { through: 'RestaurantComodity' });
     Restaurant.belongsToMany(models.Ambiance, { through: 'RestaurantAmbiance' });
+    Restaurant.belongsToMany(models.User, { through: 'UserRestaurantFavoris' });
+    Restaurant.belongsToMany(models.User, { through: 'UserRestaurantRex' });
+
     Restaurant.hasMany(models.RestaurantPhoto);
     Restaurant.hasMany(models.RestaurantMenu);
+    Restaurant.hasMany(models.UserRestaurantRex);
   };
 
   return Restaurant;

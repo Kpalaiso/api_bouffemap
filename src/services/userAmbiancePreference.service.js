@@ -24,7 +24,7 @@ const addUserAmbiancePreference = async (UserId, AmbianceId) => {
 const getAllUserAmbiancePreferencesByUserId = async (UserId) => {
   const userAmbiancePreferences = await UserAmbiancePreference.findAll({
     where: { UserId, isActive: true },
-    include: [{ model: Ambiance }],
+    include: [Ambiance],
   });
   return userAmbiancePreferences;
 };

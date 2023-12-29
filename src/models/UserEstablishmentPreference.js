@@ -15,12 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   UserEstablishmentPreference.associate = function (models) {
-    models.User.belongsToMany(models.Establishment, {
-      through: UserEstablishmentPreference,
-    });
-    models.Establishment.belongsToMany(models.User, {
-      through: UserEstablishmentPreference,
-    });
+    UserEstablishmentPreference.belongsTo(models.Establishment);
+    // models.User.belongsToMany(models.Establishment, {
+    //   through: UserEstablishmentPreference,
+    // });
+    // models.Establishment.belongsToMany(models.User, {
+    //   through: UserEstablishmentPreference,
+    // });
   };
   return UserEstablishmentPreference;
 };

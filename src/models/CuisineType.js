@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     CuisineType.belongsToMany(models.Restaurant, {
       through: 'RestaurantCuisineType',
     });
+    CuisineType.belongsToMany(models.User, {
+      through: 'UserCuisinePreference',
+    });
   };
 
   return CuisineType;

@@ -31,6 +31,21 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Tokens',
     });
     User.belongsToMany(models.Role, { through: models.UserRole });
+    User.belongsToMany(models.CuisineType, {
+      through: 'UserCuisinePreference',
+    });
+    User.belongsToMany(models.Ambiance, {
+      through: 'UserAmbiancePreference',
+    });
+    User.belongsToMany(models.Establishment, {
+      through: 'UserEstablishmentPreference',
+    });
+    User.belongsToMany(models.Restaurant, {
+      through: 'UserRestaurantFavoris',
+    });
+    User.belongsToMany(models.Restaurant, {
+      through: 'UserRestaurantRex',
+    });
   };
 
   User.prototype.isEmailTaken = async function (email) {

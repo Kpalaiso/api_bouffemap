@@ -15,28 +15,28 @@ const { jwtStrategy } = require('./config/passport');
 
     // Sync remaining models
     // await db.User.sync({ alter: true });
-    //await db.Ambiance.sync({ alter: true });
-    // await db.Role.sync({ alter: true });
-    // await db.UserRole.sync({ alter: true });
+    // await db.Ambiance.sync({ alter: true });
+    // // await db.Role.sync({ alter: true });
+    // // await db.UserRole.sync({ alter: true });
     // await db.CuisineType.sync({ alter: true });
     // await db.Comodity.sync({ alter: true });
     // await db.Establishment.sync({ alter: true });
-    // await db.Guide.sync({ alter: true });
-    // await db.Token.sync({ alter: true });
+    // // await db.Guide.sync({ alter: true });
+    // // await db.Token.sync({ alter: true });
 
-    // await db.OtpValidation.sync({ alter: true });
+    // // await db.OtpValidation.sync({ alter: true });
 
     // await db.Restaurant.sync({ alter: true });
-    // await db.RestaurantAmbiance.sync({ alter: true });
-    // await db.RestaurantComodity.sync({ alter: true });
-    // await db.RestaurantCuisineType.sync({ alter: true });
-    // await db.RestaurantMenu.sync({ alter: true });
-    //await db.RestaurantPhoto.sync({ alter: true });
+    // // await db.RestaurantAmbiance.sync({ alter: true });
+    // // await db.RestaurantComodity.sync({ alter: true });
+    // // await db.RestaurantCuisineType.sync({ alter: true });
+    // // await db.RestaurantMenu.sync({ alter: true });
+    // //await db.RestaurantPhoto.sync({ alter: true });
     // await db.UserAmbiancePreference.sync({ alter: true });
     // await db.UserCuisinePreference.sync({ alter: true });
     // await db.UserEstablishmentPreference.sync({ alter: true });
     // await db.UserRestaurantFavoris.sync({ alter: true });
-    //await db.UserRestaurantRex.sync({ alter: true });
+    // await db.UserRestaurantRex.sync({ alter: true });
 
     console.log('Connection has been established successfully.');
   } catch (error) {

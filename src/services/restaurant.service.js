@@ -7,6 +7,7 @@ const RestaurantPhoto = db.RestaurantPhoto;
 const Comodity = db.Comodity;
 const Ambiance = db.Ambiance;
 const CuisineType = db.CuisineType;
+const UserRestaurantRex = db.UserRestaurantRex;
 
 /**
  * Crée un nouveau restaurant avec les données spécifiées.
@@ -65,6 +66,7 @@ const getRestaurantById = async (id) => {
       { model: Comodity },
       { model: Ambiance },
       { model: CuisineType },
+      { model: UserRestaurantRex },
       { model: RestaurantMenu },
       { model: RestaurantPhoto },
     ],

@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Ambiance.associate = function (models) {
     Ambiance.belongsToMany(models.Restaurant, { through: 'RestaurantAmbiance' });
+    Ambiance.belongsToMany(models.User, { through: 'UserAmbiancePreference' });
   };
 
   return Ambiance;

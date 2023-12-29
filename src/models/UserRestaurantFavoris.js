@@ -14,8 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   UserRestaurantFavoris.associate = function (models) {
-    models.User.belongsToMany(models.Restaurant, { through: UserRestaurantFavoris });
-    models.Restaurant.belongsToMany(models.User, { through: UserRestaurantFavoris });
+    UserRestaurantFavoris.belongsTo(models.Restaurant);
+    // models.User.belongsToMany(models.Restaurant, { through: UserRestaurantFavoris });
+    // models.Restaurant.belongsToMany(models.User, { through: UserRestaurantFavoris });
   };
   return UserRestaurantFavoris;
 };
