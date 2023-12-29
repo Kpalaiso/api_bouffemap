@@ -26,9 +26,9 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Restaurant.associate = function (models) {
-    // Restaurant.belongsToMany(models.CuisineType, { through: 'RestaurantCuisineType' });
-    // Restaurant.belongsToMany(models.Comodity, { through: 'RestaurantComodity' });
-    // Restaurant.belongsToMany(models.Ambiance, { through: 'RestaurantAmbiance' });
+    Restaurant.belongsToMany(models.CuisineType, { through: 'RestaurantCuisineType' });
+    Restaurant.belongsToMany(models.Comodity, { through: 'RestaurantComodity' });
+    Restaurant.belongsToMany(models.Ambiance, { through: 'RestaurantAmbiance' });
     Restaurant.hasMany(models.RestaurantPhoto);
     Restaurant.hasMany(models.RestaurantMenu);
   };

@@ -11,8 +11,6 @@ const {
 
 const router = express.Router();
 
-router.use(auth);
-
 /**
  * @swagger
  * tags:

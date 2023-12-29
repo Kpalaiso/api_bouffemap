@@ -79,7 +79,7 @@ const updateRestaurantbyId = catchAsync(async (req, res) => {
 
 const getRestaurants = catchAsync(async (req, res) => {
   try {
-    const restaurants = await restaurantService.getRestaurants();
+    const restaurants = await restaurantService.getAllActiveRestaurants();
     res.status(httpStatus.OK).send({ status: config.statusRequestSucces, restaurants });
   } catch (error) {
     handleError(error, res);

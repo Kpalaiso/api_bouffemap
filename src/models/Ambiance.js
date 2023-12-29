@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'ambiances',
     }
   );
-  // Ambiance.associate = function (models) {
-  //   Ambiance.belongsToMany(models.Restaurant, { through: models.RestaurantAmbiance });
-  // };
+  Ambiance.associate = function (models) {
+    Ambiance.belongsToMany(models.Restaurant, { through: 'RestaurantAmbiance' });
+  };
 
   return Ambiance;
 };

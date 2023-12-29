@@ -2,7 +2,6 @@ const express = require('express');
 const auth = require('../../middlewares/auth');
 const router = express.Router();
 const { getStatistics } = require('../../controllers/stat.controller');
-router.use(auth);
 
 /**
  * @swagger

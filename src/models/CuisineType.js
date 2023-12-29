@@ -14,9 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'cuisine_types',
     }
   );
-  // CuisineType.associate = function(models) {
-  //     CuisineType.belongsToMany(models.Restaurant, { through: models.RestaurantCuisineType });
-  // };
+  CuisineType.associate = function (models) {
+    CuisineType.belongsToMany(models.Restaurant, {
+      through: 'RestaurantCuisineType',
+    });
+  };
 
   return CuisineType;
 };

@@ -4,9 +4,6 @@ const db = require('../models/index');
 const Restaurant = db.Restaurant;
 const RestaurantMenu = db.RestaurantMenu;
 const RestaurantPhoto = db.RestaurantPhoto;
-const RestaurantComodity = db.RestaurantComodity;
-const RestaurantAmbiance = db.RestaurantAmbiance;
-const RestaurantCuisineType = db.RestaurantCuisineType;
 const Comodity = db.Comodity;
 const Ambiance = db.Ambiance;
 const CuisineType = db.CuisineType;
@@ -42,11 +39,15 @@ const getAllActiveRestaurants = async () => {
   const restaurants = await Restaurant.findAll({
     where: { isActive: true },
     include: [
-      { model: RestaurantMenu },
-      { model: RestaurantPhoto },
-      { model: RestaurantComodity, include: [Comodity] },
-      { model: RestaurantAmbiance, include: [Ambiance] },
-      { model: RestaurantCuisineType, include: [CuisineType] },
+      { model: Comodity },
+      { model: Ambiance },
+      { model: CuisineType },
+      // { model: RestaurantMenu },
+      // { model: RestaurantPhoto },
+
+      // { model: RestaurantComodity, include: [Comodity] },
+      // { model: RestaurantAmbiance, include: [Ambiance] },
+      // { model: RestaurantCuisineType, include: [CuisineType] },
     ],
   });
   return restaurants;
@@ -61,11 +62,11 @@ const getRestaurantById = async (id) => {
   const restaurant = await Restaurant.findOne({
     where: { id, isActive: true },
     include: [
+      { model: Comodity },
+      { model: Ambiance },
+      { model: CuisineType },
       { model: RestaurantMenu },
       { model: RestaurantPhoto },
-      { model: RestaurantComodity, include: [Comodity] },
-      { model: RestaurantAmbiance, include: [Ambiance] },
-      { model: RestaurantCuisineType, include: [CuisineType] },
     ],
   });
   if (!restaurant) {

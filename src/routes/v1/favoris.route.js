@@ -8,7 +8,6 @@ const {
 } = require('../../controllers/favoris.controller');
 
 const router = express.Router();
-router.use(auth);
 
 /**
  * @swagger

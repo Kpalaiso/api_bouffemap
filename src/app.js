@@ -15,7 +15,7 @@ const { jwtStrategy } = require('./config/passport');
 
     // Sync remaining models
     // await db.User.sync({ alter: true });
-    // await db.Ambiance.sync({ alter: true });
+    //await db.Ambiance.sync({ alter: true });
     // await db.Role.sync({ alter: true });
     // await db.UserRole.sync({ alter: true });
     // await db.CuisineType.sync({ alter: true });
