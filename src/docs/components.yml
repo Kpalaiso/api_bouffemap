@@ -1,0 +1,25 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id_user:
+          type: int
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        contact:
+          type: string
+        date_enregistrement:
+          type: string
+      example:
+        id_user: 1
+        name: djaha Bertrand
+        email: djahabertrand@gmail.com
+        password: 123456
+        contact: 0758422989
+        date_enregistrement: '1890770090'
