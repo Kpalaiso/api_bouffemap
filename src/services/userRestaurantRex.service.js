@@ -15,6 +15,7 @@ const UserRestaurantRex = db.UserRestaurantRex;
  */
 const addUserRestaurantRex = async (
   UserId,
+  RestaurantId,
   beauty_restaurant,
   healthiness_restaurant,
   quality_reception,
@@ -25,7 +26,7 @@ const addUserRestaurantRex = async (
   rex
 ) => {
   let averageNote = 0;
-  averageNote =
+  averageNote = parseFloat(
     (beauty_restaurant +
       healthiness_restaurant +
       quality_reception +
@@ -33,9 +34,9 @@ const addUserRestaurantRex = async (
       speed_service +
       comodity +
       payment_diversity) /
-    7;
+      7
+  ).toFixed(1);
   const newUserRestaurantRex = await UserRestaurantRex.create({
-    UserId,
     beauty_restaurant,
     healthiness_restaurant,
     quality_reception,
@@ -44,6 +45,8 @@ const addUserRestaurantRex = async (
     comodity,
     payment_diversity,
     rex,
+    UserId,
+    RestaurantId,
     averageNote,
   });
   return newUserRestaurantRex;

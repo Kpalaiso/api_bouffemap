@@ -26,7 +26,7 @@ const { jwtStrategy } = require('./config/passport');
 
     // // await db.OtpValidation.sync({ alter: true });
 
-    // await db.Restaurant.sync({ alter: true });
+    //await db.Restaurant.sync({ alter: true });
     // // await db.RestaurantAmbiance.sync({ alter: true });
     // // await db.RestaurantComodity.sync({ alter: true });
     // // await db.RestaurantCuisineType.sync({ alter: true });

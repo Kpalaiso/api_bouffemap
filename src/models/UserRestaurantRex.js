@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       speed_service: { type: DataTypes.INTEGER },
       comodity: { type: DataTypes.INTEGER },
       payment_diversity: { type: DataTypes.INTEGER },
-      averageNote: { type: DataTypes.INTEGER },
+      averageNote: { type: DataTypes.FLOAT },
       rex: { type: DataTypes.STRING },
       isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
   UserRestaurantRex.associate = function (models) {
     UserRestaurantRex.belongsTo(models.Restaurant);
+    UserRestaurantRex.belongsTo(models.User);
     // models.User.belongsToMany(models.Restaurant, { through: UserRestaurantRex });
     // models.Restaurant.belongsToMany(models.User, { through: UserRestaurantRex });
   };

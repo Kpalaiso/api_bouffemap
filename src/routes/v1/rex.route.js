@@ -65,11 +65,11 @@ const {
  *       500:
  *         description: Internal Server Error
  */
-router.post('/rex', auth(), addRexToRestaurant);
+router.post('/', auth(), addRexToRestaurant);
 
 /**
  * @swagger
- * /rex:
+ * /rex/{restaurantId}:
  *   get:
  *     summary: Get the list of restaurant rex
  *     tags: [Rex]
@@ -79,7 +79,7 @@ router.post('/rex', auth(), addRexToRestaurant);
  *       500:
  *         description: Internal Server Error
  */
-router.get('/rex', auth(), getRestaurantRexList);
+router.get('/:restaurantId', auth(), getRestaurantRexList);
 
 /**
  * @swagger
@@ -103,6 +103,6 @@ router.get('/rex', auth(), getRestaurantRexList);
  *       500:
  *         description: Internal Server Error
  */
-router.delete('/rex/:id', auth(), deleteRex);
+router.delete('/:id', auth(), deleteRex);
 
 module.exports = router;

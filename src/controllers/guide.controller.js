@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const handleError = require('../utils/HandleError');
 const config = require('../config/config');
-const { guideServices } = require('../services');
+const guideServices = require('../services/guide.service');
 
 const addGuide = catchAsync(async (req, res) => {
   try {

@@ -3,12 +3,13 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const config = require('../config/config');
 const userRestaurantRexService = require('../services/userRestaurantRex.service');
+const restaurantService = require('../services/restaurant.service');
 
 const addRexToRestaurant = catchAsync(async (req, res) => {
   try {
     const {
-      userId,
-      restaurantId,
+      UserId,
+      RestaurantId,
       beauty_restaurant,
       healthiness_restaurant,
       quality_reception,
@@ -19,8 +20,8 @@ const addRexToRestaurant = catchAsync(async (req, res) => {
       rex,
     } = req.body;
     const createdRex = await userRestaurantRexService.addUserRestaurantRex(
-      userId,
-      restaurantId,
+      UserId,
+      RestaurantId,
       beauty_restaurant,
       healthiness_restaurant,
       quality_reception,
@@ -30,6 +31,17 @@ const addRexToRestaurant = catchAsync(async (req, res) => {
       payment_diversity,
       rex
     );
+    let averageNoteGlobal = 0;
+    const rexList = await userRestaurantRexService.getRestaurantRex(RestaurantId);
+
+    for (const rex of rexList) {
+      averageNoteGlobal += rex.dataValues.averageNote;
+    }
+
+    averageNoteGlobal = averageNoteGlobal / rexList.length;
+    console.log(averageNoteGlobal);
+    await restaurantService.updateAverageNoteRestaurantById(RestaurantId, averageNoteGlobal);
+
     res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces, createdRex });
   } catch (error) {
     handleError(error, res);

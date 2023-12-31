@@ -24,7 +24,7 @@ const addGuide = async (title, url_guide, url_img) => {
  */
 const getAllActiveGuides = async () => {
   const guides = await Guide.findAll({
-    where: { active: true },
+    where: { isActive: true },
   });
   return guides;
 };

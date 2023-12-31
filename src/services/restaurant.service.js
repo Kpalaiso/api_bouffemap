@@ -33,6 +33,22 @@ const updateRestaurantById = async (id, restaurantData) => {
 };
 
 /**
+ * Modifie un restaurant existant en utilisant son ID.
+ * @param {string} id - L'ID du restaurant à modifier.
+ * @param {object} averageNote - Average Note à mettre à jour.
+ * @returns {Promise<boolean>} - Une valeur booléenne indiquant si le restaurant a été mis à jour avec succès.
+ */
+const updateAverageNoteRestaurantById = async (id, averageNote) => {
+  const restaurant = await getRestaurantById(id);
+
+  // Met à jour les propriétés de l'ambiance
+  restaurant.averageNote = averageNote;
+  await restaurant.save();
+
+  return restaurant;
+};
+
+/**
  * Récupère la liste de tous les restaurants actifs.
  * @returns {Promise<Restaurant[]>} - Un tableau contenant tous les restaurants actifs.
  */
@@ -66,7 +82,7 @@ const getRestaurantById = async (id) => {
       { model: Comodity },
       { model: Ambiance },
       { model: CuisineType },
-      { model: UserRestaurantRex },
+      { model: UserRestaurantRex, include: [db.User] },
       { model: RestaurantMenu },
       { model: RestaurantPhoto },
     ],
@@ -131,40 +147,51 @@ const filterRestaurants = async (filters) => {
     location = '',
     minBudget = 0,
     maxBudget = 10000000,
-    cuisineTypes,
-    ambiances,
-    comodities,
+    cuisineTypeIds,
+    ambianceIds,
+    comodityIds,
+    establishmentIds,
   } = filters;
   const whereCondition = {};
 
   if (location !== '') {
-    whereCondition.localisation = location;
+    whereCondition.commune = location;
   }
-  if (cuisineTypes && cuisineTypes.length > 0) {
+  if (cuisineTypeIds && cuisineTypeIds.length > 0) {
     whereCondition.id = {
       [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_cuisine_types" WHERE "CuisineTypeId" IN (SELECT id FROM "cuisie_types" WHERE name IN (${cuisineTypes
+        `(SELECT "RestaurantId" FROM "restaurant_cuisine_types" WHERE "CuisineTypeId" IN (SELECT id FROM "cuisie_types" WHERE id IN (${cuisineTypes
           .map((type) => `'${type}'`)
           .join(',')})))`
       ),
     };
   }
 
-  if (ambiances && ambiances.length > 0) {
+  if (ambianceIds && ambianceIds.length > 0) {
     whereCondition.id = {
       [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_ambiances" WHERE "AmbianceId" IN (SELECT id FROM "ambiances" WHERE name IN (${ambiances
+        `(SELECT "RestaurantId" FROM "restaurant_ambiances" WHERE "AmbianceId" IN (SELECT id FROM "ambiances" WHERE id IN (${ambiances
           .map((ambiance) => `'${ambiance}'`)
           .join(',')})))`
       ),
     };
   }
 
-  if (comodities && comodities.length > 0) {
+  if (comodityIds && comodityIds.length > 0) {
     whereCondition.id = {
       [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_comodities" WHERE "ComodityId" IN (SELECT id FROM "comodities" WHERE name IN (${comodities
+        `(SELECT "RestaurantId" FROM "restaurant_comodities" WHERE "ComodityId" IN (SELECT id FROM "comodities" WHERE id IN (${comodities
           .map((comodity) => `'${comodity}'`)
+          .join(',')})))`
+      ),
+    };
+  }
+
+  if (establishmentIds && establishmentIds.length > 0) {
+    whereCondition.id = {
+      [Op.in]: sequelize.literal(
+        `(SELECT "RestaurantId" FROM "restaurants" WHERE "etablissementType" IN (SELECT id FROM "establishments" WHERE id IN (${establishments
+          .map((establishment) => `'${establishment}'`)
           .join(',')})))`
       ),
     };
@@ -182,6 +209,7 @@ const filterRestaurants = async (filters) => {
 module.exports = {
   createRestaurant,
   updateRestaurantById,
+  updateAverageNoteRestaurantById,
   getAllActiveRestaurants,
   getRestaurantById,
   getTotalRestaurantCount,

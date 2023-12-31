@@ -5,6 +5,7 @@ const {
   addUserRestaurantFavoris,
   getUserRestaurantFavoris,
   removeUserRestaurantFavoris,
+  getFavorisByUserIdAndRestaurantId,
 } = require('../../controllers/favoris.controller');
 
 const router = express.Router();
@@ -63,6 +64,33 @@ router.post('/', auth(), addUserRestaurantFavoris);
  *         description: Internal Server Error
  */
 router.get('/user/:userId', auth(), getUserRestaurantFavoris);
+
+/**
+ * @swagger
+ * /favoris/user/{userId}/restaurant/{restaurantId}:
+ *   get:
+ *     summary: Get user-restaurant favoris
+ *     tags: [Favoris]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: id of the users
+ *       - in: path
+ *         name: restaurantId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: id of the restaurants
+ *     responses:
+ *       200:
+ *         description: Success
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/user/:userId/restaurant/:restaurantId', auth(), getFavorisByUserIdAndRestaurantId);
 
 /**
  * @swagger

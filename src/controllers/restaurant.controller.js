@@ -276,15 +276,24 @@ async function deleteRestaurantPhoto(req, res) {
 
 async function filterRestaurants(req, res) {
   try {
-    const { location, minBudget, maxBudget, cuisineTypes, ambiances, comodities } = req.body;
+    const {
+      location,
+      minBudget,
+      maxBudget,
+      cuisineTypeIds,
+      ambiancesIds,
+      comodityIds,
+      establishmentIds,
+    } = req.body;
 
     const restaurants = await restaurantService.filterRestaurants({
       location,
       minBudget,
       maxBudget,
-      cuisineTypes,
-      ambiances,
-      comodities,
+      cuisineTypeIds,
+      ambiancesIds,
+      comodityIds,
+      establishmentIds,
     });
     res.status(httpStatus.OK).send({ status: config.statusRequestSucces, restaurants });
   } catch (error) {

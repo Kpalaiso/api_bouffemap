@@ -23,6 +23,8 @@ const restaurantController = require('../../controllers/restaurant.controller');
  *           type: string
  *         img_profil:
  *           type: string
+ *         commune:
+ *           type: string
  *         localisation:
  *           type: string
  *         contact:
@@ -591,21 +593,26 @@ router.delete('/:restaurantId/photos/:photoId', auth(), restaurantController.del
  *         maxBudget:
  *           type: number
  *           description: Budget maximum
- *         cuisineTypes:
+ *         cuisineTypeIds:
  *           type: array
  *           items:
- *             type: string
+ *             type: integer
  *           description: Types de cuisine
- *         ambiances:
+ *         ambianceIds:
  *           type: array
  *           items:
- *             type: string
+ *             type: integer
  *           description: Ambiances
- *         comodities:
+ *         comodityIds:
  *           type: array
  *           items:
- *             type: string
+ *             type: integer
  *           description: Commodités
+ *         establishmentIds:
+ *           type: array
+ *           items:
+ *             type: integer
+ *           description: Etablissments
  */
 
 /**

@@ -6,10 +6,10 @@ const { userRestaurantFavorisService } = require('../services');
 
 const addUserRestaurantFavoris = catchAsync(async (req, res) => {
   try {
-    const { userId, restaurantId } = req.body;
+    const { UserId, RestaurantId } = req.body;
     const newFavoris = await userRestaurantFavorisService.addUserRestaurantFavoris(
-      userId,
-      restaurantId
+      UserId,
+      RestaurantId
     );
     res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces, newFavoris });
   } catch (error) {
@@ -21,6 +21,18 @@ const getUserRestaurantFavoris = catchAsync(async (req, res) => {
   try {
     const { userId } = req.params;
     const favoris = await userRestaurantFavorisService.getUserRestaurantFavoris(userId);
+    res.status(httpStatus.OK).send({ status: config.statusRequestSucces, favoris });
+  } catch (error) {
+    handleError(error, res);
+  }
+});
+const getFavorisByUserIdAndRestaurantId = catchAsync(async (req, res) => {
+  try {
+    const { userId, restaurantId } = req.params;
+    const favoris = await userRestaurantFavorisService.getFavorisByUserIdAndRestaurantId(
+      userId,
+      restaurantId
+    );
     res.status(httpStatus.OK).send({ status: config.statusRequestSucces, favoris });
   } catch (error) {
     handleError(error, res);
@@ -40,5 +52,6 @@ const removeUserRestaurantFavoris = catchAsync(async (req, res) => {
 module.exports = {
   addUserRestaurantFavoris,
   getUserRestaurantFavoris,
+  getFavorisByUserIdAndRestaurantId,
   removeUserRestaurantFavoris,
 };

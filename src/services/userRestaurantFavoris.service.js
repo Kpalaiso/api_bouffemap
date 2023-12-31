@@ -28,6 +28,19 @@ const getUserRestaurantFavoris = async (UserId) => {
 };
 
 /**
+ * Récupère la liste des restaurants favoris d'un utilisateur.
+ * @param {string} UserId - L'ID de l'utilisateur.
+ * @param {string} RestaurantId - L'ID du restaurant.
+ * @returns {Promise<UserRestaurantFavoris[]>} La liste des restaurants favoris de l'utilisateur.
+ */
+const getFavorisByUserIdAndRestaurantId = async (UserId, RestaurantId) => {
+  const favoris = await UserRestaurantFavoris.count({
+    where: { UserId, RestaurantId, isActive: true },
+  });
+  return favoris;
+};
+
+/**
  * Supprime un restaurant favori d'un utilisateur.
  * @param {string} UserId - L'ID de l'utilisateur.
  * @param {string} RestaurantId - L'ID du restaurant favori à supprimer.
@@ -43,5 +56,6 @@ const deleteUserRestaurantFavoris = async (UserId, RestaurantId) => {
 module.exports = {
   addUserRestaurantFavoris,
   getUserRestaurantFavoris,
+  getFavorisByUserIdAndRestaurantId,
   deleteUserRestaurantFavoris,
 };

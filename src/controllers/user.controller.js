@@ -79,7 +79,7 @@ const addUserCuisineType = catchAsync(async (req, res) => {
     const cuisineTypes = data.cuisineTypeIds;
     const userId = data.userId;
     for (const cuisineTypeId of cuisineTypes) {
-      await userCuisinePreferenceService.addUserCuisineType(userId, cuisineTypeId);
+      await userCuisinePreferenceService.addUserCuisinePreference(userId, cuisineTypeId);
     }
     res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces });
   } catch (error) {
@@ -113,7 +113,10 @@ const addUserEstablishment = catchAsync(async (req, res) => {
     const establishments = data.establishmentIds;
     const userId = data.userId;
     for (const establishmentId of establishments) {
-      await userEstablishmentPreferenceService.addUserEstablishment(userId, establishmentId);
+      await userEstablishmentPreferenceService.addUserEstablishmentPreference(
+        userId,
+        establishmentId
+      );
     }
     res.status(httpStatus.CREATED).send({ status: config.statusRequestSucces });
   } catch (error) {

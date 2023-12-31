@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       name: { type: DataTypes.STRING },
       img_cover: { type: DataTypes.STRING },
       img_profil: { type: DataTypes.STRING },
+      commune: { type: DataTypes.STRING },
       localisation: { type: DataTypes.STRING },
       contact: { type: DataTypes.STRING },
       budget_min: { type: DataTypes.FLOAT },
@@ -18,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       description: { type: DataTypes.TEXT },
       etablissementType: { type: DataTypes.STRING },
       visits: { type: DataTypes.INTEGER, defaultValue: 0 },
+      averageNote: { type: DataTypes.FLOAT, defaultValue: 0 },
       isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {

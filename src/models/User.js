@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Token, {
       as: 'Tokens',
     });
+    User.hasMany(models.UserRestaurantRex);
     User.belongsToMany(models.Role, { through: models.UserRole });
     User.belongsToMany(models.CuisineType, {
       through: 'UserCuisinePreference',
