@@ -6,6 +6,7 @@ const register = {
     email: Joi.string().required().email(),
     password: Joi.string().required(),
     device: Joi.string().required(),
+    phoneNumber: Joi.string().required().custom(phoneNumber),
   }),
 };
 const verifyTypeEmail = {

@@ -37,7 +37,7 @@ const getUserByPhoneNumber = async (phoneNumber) => {
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  const { fullName, email, password, device } = userBody;
+  const { fullName, email, password, device, phoneNumber } = userBody;
   const passwordCrypt = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
   if (await User.prototype.isEmailTaken(email)) {
     throw new ApiError(
@@ -46,6 +46,7 @@ const createUser = async (userBody) => {
       "L'adresse e-mail est déjà utilisé"
     );
   }
+
   if (await User.prototype.isPhoneNumberTaken(phoneNumber)) {
     throw new ApiError(
       httpStatus.CONFLICT,
@@ -60,7 +61,6 @@ const createUser = async (userBody) => {
     password: passwordCrypt,
     phoneNumber,
     device,
-    localisation,
   });
 };
 
