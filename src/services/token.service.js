@@ -65,7 +65,7 @@ const generateAuthTokens = async (user) => {
 const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, process.env.JWT_SECRET);
   const tokenDoc = await Token.findOne({
-    where: { token: token, type: type, UserId: payload.id_user, blacklisted: false },
+    where: { token: token, type: type, UserId: payload.sub, blacklisted: false },
     order: [['createdAt', 'DESC']],
   });
   if (!tokenDoc) {

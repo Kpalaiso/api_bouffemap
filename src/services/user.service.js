@@ -37,7 +37,7 @@ const getUserByPhoneNumber = async (phoneNumber) => {
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  const { fullName, email, password, device, phoneNumber, localisation } = userBody;
+  const { fullName, email, password, device } = userBody;
   const passwordCrypt = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
   if (await User.prototype.isEmailTaken(email)) {
     throw new ApiError(

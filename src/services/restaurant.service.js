@@ -1,9 +1,13 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
+const { Op } = require('sequelize');
 const db = require('../models/index');
 const Restaurant = db.Restaurant;
 const RestaurantMenu = db.RestaurantMenu;
 const RestaurantPhoto = db.RestaurantPhoto;
+const RestaurantCuisineType = db.RestaurantCuisineType;
+const RestaurantAmbiance = db.RestaurantAmbiance;
+const RestaurantCommodity = db.RestaurantCommodity;
 const Comodity = db.Comodity;
 const Ambiance = db.Ambiance;
 const CuisineType = db.CuisineType;
@@ -146,7 +150,7 @@ const filterRestaurants = async (filters) => {
   const {
     location = '',
     minBudget = 0,
-    maxBudget = 10000000,
+    maxBudget = 10,
     cuisineTypeIds,
     ambianceIds,
     comodityIds,
@@ -157,50 +161,112 @@ const filterRestaurants = async (filters) => {
   if (location !== '') {
     whereCondition.commune = location;
   }
+
   if (cuisineTypeIds && cuisineTypeIds.length > 0) {
     whereCondition.id = {
-      [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_cuisine_types" WHERE "CuisineTypeId" IN (SELECT id FROM "cuisie_types" WHERE id IN (${cuisineTypes
-          .map((type) => `'${type}'`)
-          .join(',')})))`
+      [Op.in]: db.Sequelize.literal(
+        `(SELECT RestaurantId FROM \`restaurant_cuisine_types\` WHERE CuisineTypeId IN (${cuisineTypeIds
+          .map((type) => `${type}`)
+          .join(',')}))`
       ),
     };
   }
 
   if (ambianceIds && ambianceIds.length > 0) {
     whereCondition.id = {
-      [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_ambiances" WHERE "AmbianceId" IN (SELECT id FROM "ambiances" WHERE id IN (${ambiances
+      [Op.in]: db.Sequelize.literal(
+        `(SELECT RestaurantId FROM \`restaurant_ambiances\` WHERE AmbianceId IN (${ambianceIds
           .map((ambiance) => `'${ambiance}'`)
-          .join(',')})))`
+          .join(',')}))`
       ),
     };
   }
 
   if (comodityIds && comodityIds.length > 0) {
     whereCondition.id = {
-      [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurant_comodities" WHERE "ComodityId" IN (SELECT id FROM "comodities" WHERE id IN (${comodities
+      [Op.in]: db.Sequelize.literal(
+        `(SELECT RestaurantId FROM \`restaurant_comodities\` WHERE ComodityId IN (${comodityIds
           .map((comodity) => `'${comodity}'`)
-          .join(',')})))`
+          .join(',')}))`
       ),
     };
   }
 
   if (establishmentIds && establishmentIds.length > 0) {
     whereCondition.id = {
-      [Op.in]: sequelize.literal(
-        `(SELECT "RestaurantId" FROM "restaurants" WHERE "etablissementType" IN (SELECT id FROM "establishments" WHERE id IN (${establishments
+      [Op.in]: db.Sequelize.literal(
+        `(SELECT id FROM \`restaurants\` WHERE etablissementType IN  (${establishmentIds
           .map((establishment) => `'${establishment}'`)
-          .join(',')})))`
+          .join(',')}))`
       ),
     };
+  }
+
+  whereCondition.budget = { [Op.between]: [minBudget, maxBudget] };
+
+  const filteredRestaurants = await Restaurant.findAll({
+    where: whereCondition,
+  });
+
+  return filteredRestaurants;
+};
+
+const filterRestaurantss = async (filters) => {
+  const {
+    location = '',
+    minBudget = 0,
+    maxBudget = 10000000,
+    cuisineTypeIds = [],
+    ambianceIds = [],
+    comodityIds = [],
+    establishmentIds = [],
+  } = filters;
+
+  const whereCondition = {};
+
+  if (location !== '') {
+    whereCondition.commune = location;
   }
 
   whereCondition.budget_min = { [Op.between]: [minBudget, maxBudget] };
 
   const filteredRestaurants = await Restaurant.findAll({
     where: whereCondition,
+    include: [
+      {
+        model: CuisineType,
+        where: {
+          id: {
+            [Op.in]: cuisineTypeIds,
+          },
+        },
+      },
+      {
+        model: Ambiance,
+        where: {
+          id: {
+            [Op.in]: ambianceIds,
+          },
+        },
+      },
+
+      {
+        model: Comodity,
+        where: {
+          id: {
+            [Op.in]: comodityIds,
+          },
+        },
+      },
+      // {
+      //   model: Establishment,
+      //   where: {
+      //     id: {
+      //       [Op.in]: establishmentIds,
+      //     },
+      //   },
+      // },
+    ],
   });
 
   return filteredRestaurants;
