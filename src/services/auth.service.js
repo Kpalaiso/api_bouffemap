@@ -6,14 +6,36 @@ const { tokenTypes } = require('../config/token');
 const ApiError = require('../utils/ApiError');
 
 /**
- * Login with username and password
+ * Login with email and password
  * @param {string} email
  * @param {string} password
+ * @param {string} typeAuth
  * @returns {Promise<User>}
  */
-const loginUserWithEmailAndPassword = async (email, password) => {
+const loginUserWithEmailAndPassword = async (email, password, typeAuth) => {
   const user = await userService.getUserByEmail(email);
-  if (!user || !(await bcrypt.compare(password, user.dataValues.password))) {
+  if (
+    !user ||
+    !(await bcrypt.compare(password, user.dataValues.password)) ||
+    user.dataValues.typeAuth != typeAuth
+  ) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'Incorrect email or password',
+      'Email ou mot de passe incorrect'
+    );
+  }
+  return user;
+};
+/**
+ * Login with email and typeAuth
+ * @param {string} email
+ * @param {string} typeAuth
+ * @returns {Promise<User>}
+ */
+const loginUserWithEmailAndTypeAuth = async (email, typeAuth) => {
+  const user = await userService.getUserByEmail(email);
+  if (!user || user.dataValues.typeAuth != typeAuth) {
     throw new ApiError(
       httpStatus.UNAUTHORIZED,
       'Incorrect email or password',
@@ -93,4 +115,10 @@ const refreshAuth = async (refreshToken) => {
   }
 };
 
-module.exports = { loginUserWithEmailAndPassword, logout, resetPassword, refreshAuth };
+module.exports = {
+  loginUserWithEmailAndPassword,
+  loginUserWithEmailAndTypeAuth,
+  logout,
+  resetPassword,
+  refreshAuth,
+};

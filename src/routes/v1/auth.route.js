@@ -56,6 +56,7 @@ module.exports = router;
  *               -password
  *               -phoneNumber
  *               -device
+ *               -typeAuth
  *             properties:
  *               fullName:
  *                 type: string
@@ -71,18 +72,15 @@ module.exports = router;
  *                 type: string
  *               device:
  *                 type: string
- *               localisation:
- *                 type: string
  *               typeAuth:
  *                 type: string
  *             example:
  *               name: fake name
  *               email: fake@example.com
  *               password: password1
- *               phoneNumber: 0758422989
+ *               phoneNumber: +2250758422989
  *               device: '1890770090'
- *               localisation: 'Cocody'
- *               typeAuth: 'authEmail'
+ *               typeAuth: 'authEmail | authGoogle | authFacebook'
  *
  *     responses:
  *       "201":
@@ -115,6 +113,7 @@ module.exports = router;
  *             required:
  *               - email
  *               - password
+ *               - typeAuth
  *             properties:
  *               email:
  *                 type: string
@@ -122,9 +121,12 @@ module.exports = router;
  *               password:
  *                 type: string
  *                 format: password
+ *               typeAuth:
+ *                 type: string
  *             example:
  *               email: fake@example.com
  *               password: password1
+ *               typeAuth: "authEmail | authGoogle | authFacebook"
  *     responses:
  *       "200":
  *         description: OK

@@ -86,7 +86,7 @@ const getRestaurantById = async (id) => {
       { model: Comodity },
       { model: Ambiance },
       { model: CuisineType },
-      { model: UserRestaurantRex, include: [db.User] },
+      { model: UserRestaurantRex, include: [db.User], order: [['id', 'DESC']] },
       { model: RestaurantMenu },
       { model: RestaurantPhoto },
     ],

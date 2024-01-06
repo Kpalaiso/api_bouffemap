@@ -13,6 +13,9 @@ const config = require('../config/config');
 
 const register = catchAsync(async (req, res, next) => {
   try {
+    if (req.body.password == null || req.body.password == '') {
+      req.body.password = '12345';
+    }
     const user = await userService.createUser(req.body);
     const tokens = await tokenService.generateAuthTokens(user);
     const roleUserBody = {
@@ -29,8 +32,13 @@ const register = catchAsync(async (req, res, next) => {
 
 const login = catchAsync(async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await authService.loginUserWithEmailAndPassword(email, password);
+    const { email, password, typeAuth } = req.body;
+    let user;
+    if (typeAuth == 'authEmail') {
+      user = await authService.loginUserWithEmailAndPassword(email, password, typeAuth);
+    } else {
+      user = await authService.loginUserWithEmailAndTypeAuth(email, typeAuth);
+    }
     const tokens = await tokenService.generateAuthTokens(user);
     res.status(httpStatus.OK).send({ status: config.statusRequestSucces, user, tokens });
   } catch (err) {

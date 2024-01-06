@@ -60,4 +60,5 @@ module.exports = {
     name: envVars.EMAIL_NAME,
   },
   statusRequestSucces: envVars.STATUS_REQUEST_SUCESS,
+  passwoedOtherConnection: envVars.PASSWORD_OTHER_CONNECTION,
 };

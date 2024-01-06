@@ -1,6 +1,9 @@
 const db = require('../models/index');
 const UserRestaurantFavoris = db.UserRestaurantFavoris;
 const Restaurant = db.Restaurant;
+const Comodity = db.Comodity;
+const Ambiance = db.Ambiance;
+const CuisineType = db.CuisineType;
 /**
  * Ajoute un restaurant favori à un utilisateur.
  * @param {string} UserId - L'ID de l'utilisateur.
@@ -22,7 +25,13 @@ const addUserRestaurantFavoris = async (UserId, RestaurantId) => {
 const getUserRestaurantFavoris = async (UserId) => {
   const favoris = await UserRestaurantFavoris.findAll({
     where: { UserId, isActive: true },
-    include: [{ model: Restaurant }],
+    order: [['id', 'DESC']],
+    include: [
+      { model: Restaurant },
+      { model: Comodity },
+      { model: Ambiance },
+      { model: CuisineType },
+    ],
   });
   return favoris;
 };

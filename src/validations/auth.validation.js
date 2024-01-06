@@ -4,9 +4,10 @@ const register = {
   body: Joi.object().keys({
     fullName: Joi.string().min(2).max(200).required(),
     email: Joi.string().required().email(),
-    password: Joi.string().required(),
+    password: Joi.string().allow(''),
     device: Joi.string().required(),
-    phoneNumber: Joi.string().required().custom(phoneNumber),
+    phoneNumber: Joi.string().allow('').custom(phoneNumber),
+    typeAuth: Joi.string().required(),
   }),
 };
 const verifyTypeEmail = {
@@ -28,7 +29,8 @@ const verifyEmailAndPhoneNumber = {
 const login = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required(),
+    password: Joi.string().allow(''),
+    typeAuth: Joi.string().required(),
   }),
 };
 
