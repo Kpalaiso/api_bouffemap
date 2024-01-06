@@ -61,6 +61,7 @@ const addUserRestaurantRex = async (
 const getRestaurantRex = async (restaurantId) => {
   const rex = await UserRestaurantRex.findAll({
     where: { restaurantId, isActive: true },
+    include: [db.User],
     order: [['id', 'DESC']],
   });
   return rex;

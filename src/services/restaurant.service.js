@@ -2,12 +2,13 @@ const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { Op } = require('sequelize');
 const db = require('../models/index');
+const { log } = require('winston');
 const Restaurant = db.Restaurant;
 const RestaurantMenu = db.RestaurantMenu;
 const RestaurantPhoto = db.RestaurantPhoto;
-const RestaurantCuisineType = db.RestaurantCuisineType;
-const RestaurantAmbiance = db.RestaurantAmbiance;
-const RestaurantCommodity = db.RestaurantCommodity;
+// const RestaurantCuisineType = db.RestaurantCuisineType;
+// const RestaurantAmbiance = db.RestaurantAmbiance;
+// const RestaurantCommodity = db.RestaurantCommodity;
 const Comodity = db.Comodity;
 const Ambiance = db.Ambiance;
 const CuisineType = db.CuisineType;
@@ -59,18 +60,16 @@ const updateAverageNoteRestaurantById = async (id, averageNote) => {
 const getAllActiveRestaurants = async () => {
   const restaurants = await Restaurant.findAll({
     where: { isActive: true },
-    include: [
-      { model: Comodity },
-      { model: Ambiance },
-      { model: CuisineType },
-      // { model: RestaurantMenu },
-      // { model: RestaurantPhoto },
-
-      // { model: RestaurantComodity, include: [Comodity] },
-      // { model: RestaurantAmbiance, include: [Ambiance] },
-      // { model: RestaurantCuisineType, include: [CuisineType] },
-    ],
+    order: [['id', 'DESC']],
+    include: [{ model: Comodity }, { model: Ambiance }, { model: CuisineType }],
   });
+  // { model: RestaurantMenu },
+  // { model: RestaurantPhoto },
+
+  // { model: RestaurantComodity, include: [Comodity] },
+  // { model: RestaurantAmbiance, include: [Ambiance] },
+  // { model: RestaurantCuisineType, include: [CuisineType] },
+  console.log(restaurants);
   return restaurants;
 };
 
@@ -86,9 +85,13 @@ const getRestaurantById = async (id) => {
       { model: Comodity },
       { model: Ambiance },
       { model: CuisineType },
-      { model: UserRestaurantRex, include: [db.User], order: [['id', 'DESC']] },
+      {
+        model: UserRestaurantRex,
+        include: [db.User],
+        limit: 3,
+      },
       { model: RestaurantMenu },
-      { model: RestaurantPhoto },
+      { model: RestaurantPhoto, limit: 6 },
     ],
   });
   if (!restaurant) {

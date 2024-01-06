@@ -27,10 +27,10 @@ const getUserRestaurantFavoris = async (UserId) => {
     where: { UserId, isActive: true },
     order: [['id', 'DESC']],
     include: [
-      { model: Restaurant },
-      { model: Comodity },
-      { model: Ambiance },
-      { model: CuisineType },
+      {
+        model: Restaurant,
+        include: [Comodity, Ambiance, CuisineType],
+      },
     ],
   });
   return favoris;

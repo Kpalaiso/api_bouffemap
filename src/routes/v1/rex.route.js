@@ -69,7 +69,7 @@ router.post('/', auth(), addRexToRestaurant);
 
 /**
  * @swagger
- * /rex/{restaurantId}:
+ * /rex/restaurant/{restaurantId}:
  *   get:
  *     summary: Get the list of restaurant rex
  *     tags: [Rex]
@@ -79,7 +79,7 @@ router.post('/', auth(), addRexToRestaurant);
  *       500:
  *         description: Internal Server Error
  */
-router.get('/:restaurantId', auth(), getRestaurantRexList);
+router.get('/restaurants/:restaurantId', auth(), getRestaurantRexList);
 
 /**
  * @swagger
